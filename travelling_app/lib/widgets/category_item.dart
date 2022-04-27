@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import '../screens/category_trips_screen.dart';
 
@@ -13,11 +11,10 @@ class CategoryItem extends StatelessWidget {
 
   // للانتقال الى صفحة جديدة
   void selectCategory(BuildContext ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (c) => CategoryTripsScreen(id, title),
-      ),
-    );
+    Navigator.of(ctx).pushNamed(CategoryTripsScreen.screenRoute, arguments: {
+      'id': id,
+      'title': title,
+    });
   }
 
   @override
