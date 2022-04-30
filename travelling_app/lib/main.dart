@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
     'family': false,
   };
   List<Trip> _availableTrips = Trips_data;
+  // لاضافة الصفحات المفضلة لدي المستخدم
   List<Trip> _favoriteTrips = [];
 
   void _changeFilter(Map<String, bool> filterData) {
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       //  home: CategoriesScreen(),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => TabScreen(),
+        '/': (ctx) => TabScreen(_favoriteTrips),
         CategoryTripsScreen.screenRoute: (ctx) =>
             CategoryTripsScreen(_availableTrips),
         TripDetailScreen.screenRoute: (ctx) => TripDetailScreen(),

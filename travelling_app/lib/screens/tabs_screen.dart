@@ -1,36 +1,55 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import '../models/trip.dart';
 import 'package:travelling_app/screens/categories_screen.dart';
 import 'package:travelling_app/screens/favorites_screen.dart';
 
 import '../widgets/app_drawer.dart';
 
 class TabScreen extends StatefulWidget {
+  final List<Trip> favoriteTrips;
+  TabScreen(this.favoriteTrips);
+
   @override
   _TabScreenState createState() => _TabScreenState();
 }
 
 class _TabScreenState extends State<TabScreen> {
 //سيتم تنفيذ هذه الدالة ( BottomNavigationBarItem)عند الضغط على
-  void _selectScreen(int indext) {
+  void _selectScreen(int index) {
     setState(() {
-      _selectedScreenIndex = indext;
+      _selectedScreenIndex = index;
     });
   }
 
   int _selectedScreenIndex = 0;
-  final List<Widget> _screens = [
-    CategoriesScreen(),
-    FavoritesScreen(),
-  ];
+
+  late List<Map<String, Object>> _screens;
+
+  @override
+  void initState() {
+    _screens = [
+      {
+        'Screen': CategoriesScreen(),
+        'Title': 'تصنيفات الرحلات',
+      },
+      {
+        'Screen': FavoritesScreen(widget.favoriteTrips),
+        'Title': 'الرحلات المفضلة',
+      },
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('دليل سياحي '),
-        centerTitle: true,
+        title: Text('thanks'),
       ),
       drawer: AppDrawer(),
-      body: _screens[_selectedScreenIndex],
+      body: Text('any'),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,
         backgroundColor: Theme.of(context).primaryColor,
@@ -39,8 +58,13 @@ class _TabScreenState extends State<TabScreen> {
         currentIndex: _selectedScreenIndex,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard), label: 'التصنيفات '),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'المفضلة  '),
+            icon: Icon(Icons.dashboard),
+            label: 'التصنيفات',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'المفضلة',
+          ),
         ],
       ),
     );
