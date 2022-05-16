@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travelling_app/widgets/login_screen.dart';
+import 'package:travelling_app/widgets/splash_screen.dart';
 import './app_data.dart';
 import 'package:travelling_app/screens/categories_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -58,9 +60,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       //  home: CategoriesScreen(),
-      initialRoute: '/',
+      initialRoute: 'init_screen',
       routes: {
-        '/': (ctx) => TabScreen(_favoriteTrips),
+        'init_screen': (ctx) => SplashSceen(),
+        '/': (ctx) => TabScreen(),
+        '/Login-trips': (context) => LoginScreen(),
         CategoryTripsScreen.screenRoute: (ctx) =>
             CategoryTripsScreen(_availableTrips),
         TripDetailScreen.screenRoute: (ctx) => TripDetailScreen(),

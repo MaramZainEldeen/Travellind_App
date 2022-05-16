@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import '../models/trip.dart';
 import 'package:travelling_app/screens/categories_screen.dart';
@@ -8,8 +6,8 @@ import 'package:travelling_app/screens/favorites_screen.dart';
 import '../widgets/app_drawer.dart';
 
 class TabScreen extends StatefulWidget {
-  final List<Trip> favoriteTrips;
-  TabScreen(this.favoriteTrips);
+  //final List<Trip> favoriteTrips;
+  //TabScreen(this.favoriteTrips);
 
   @override
   _TabScreenState createState() => _TabScreenState();
@@ -35,7 +33,7 @@ class _TabScreenState extends State<TabScreen> {
         'Title': 'تصنيفات الرحلات',
       },
       {
-        'Screen': FavoritesScreen(widget.favoriteTrips),
+        //'Screen': FavoritesScreen(widget.favoriteTrips),
         'Title': 'الرحلات المفضلة',
       },
     ];
