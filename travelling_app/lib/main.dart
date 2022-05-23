@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travelling_app/providers/auth_provider.dart';
 import 'package:travelling_app/widgets/login_screen.dart';
 import 'package:travelling_app/widgets/splash_screen.dart';
 import './app_data.dart';
@@ -11,9 +13,16 @@ import 'package:travelling_app/screens/trip_detail_screen.dart';
 import './screens/category_trips_screen.dart';
 import './screens/trip_detail_screen.dart';
 import './models/trip.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  //Firebase.initializeApp();
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
+  runApp(ChangeNotifierProvider<AuthProvider>(
+    create: (context) => AuthProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -62,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       //  home: CategoriesScreen(),
       initialRoute: 'init_screen',
       routes: {
-        'init_screen': (ctx) => SplashSceen(),
+        'init_screen': (ctx) => FirebaseConfiguration(),
         '/': (ctx) => TabScreen(),
         '/Login-trips': (context) => LoginScreen(),
         CategoryTripsScreen.screenRoute: (ctx) =>
@@ -95,5 +104,38 @@ class _MyAppState extends State<MyApp> {
                   fontFamily: 'ElMessiri',
                   fontWeight: FontWeight.bold))),
     );
+  }
+}
+
+class FirebaseConfiguration extends StatelessWidget {
+  static String routeName = 'firebaseConfiguration';
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<FirebaseApp>(
+        future: Firebase.initializeApp(),
+        builder: (context, AsyncSnapshot<FirebaseApp> dataSnappshot) {
+          if (dataSnappshot.hasError) {
+            return Scaffold(
+              backgroundColor: Colors.red,
+              body: Center(
+                child: ElevatedButton(
+                  child: Text(dataSnappshot.error.toString()),
+                  onPressed: () {
+                    print(dataSnappshot.error.toString());
+                  },
+                ),
+              ),
+            );
+          }
+          if (dataSnappshot.connectionState == ConnectionState.done) {
+            // return Scaffold(
+            //   body: Text('DONE'),
+            // );
+            return SplashSceen();
+          }
+          return Scaffold(
+            body: CircularProgressIndicator(),
+          );
+        });
   }
 }
